@@ -4,7 +4,7 @@
   "description": "Css polyfill for browsers without ShadowDom support Edit",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --ui tdd"
   },
   "repository": {
     "type": "git",
