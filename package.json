@@ -1,7 +1,7 @@
 {
   "name": "splattercss",
   "version": "1.0.0",
-  "description": "Css polyfill for browsers without ShadowDom support Edit",
+  "description": "Css polyfill for browsers without ShadowDom support",
   "main": "lib/splattercss.min.js",
   "scripts": {
     "test": "mocha --ui tdd",
