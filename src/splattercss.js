@@ -102,6 +102,17 @@
   }
 
   /**
+   * Main method to parse given css and to inject it in the given dom
+   *
+   * @param String css
+   * @param String dom
+   * @return String styled dom
+   */
+  SplatterCss.mesh = function(css, dom) {
+    return this.inject(this.parse(css), dom);
+  }
+
+  /**
    * Expose the defined module
    */
   return SplatterCss;
