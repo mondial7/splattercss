@@ -2,9 +2,10 @@
   "name": "splattercss",
   "version": "1.0.0",
   "description": "Css polyfill for browsers without ShadowDom support Edit",
-  "main": "index.js",
+  "main": "lib/splattercss.min.js",
   "scripts": {
-    "test": "mocha --ui tdd"
+    "test": "mocha --ui tdd",
+    "build": "uglifyjs src/splattercss.js -o lib/splattercss.min.js --comments"
   },
   "repository": {
     "type": "git",

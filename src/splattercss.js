@@ -1,10 +1,28 @@
 /**
- * Will update this soon
- * Doing nothing yet
+ * @license
+ * Copyright (c) 2018 Marco Mondini <mmondini@mondspace.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 /**
- * Modules exposure: AMD, CommonJS, ES6
+ * Modules exposure
  */
 (function (root, factory) {
   if(typeof define === "function" && define.amd) {
@@ -21,7 +39,7 @@
   /**
    * Define the module as empty object
    */
-  let SplatterCss = {};
+  var SplatterCss = {};
 
   /**
    * Parse a given css string
@@ -31,25 +49,25 @@
    * @param String css
    * @return Array {Object}
    */
-  SplatterCss.parse = css => {
+  SplatterCss.parse = function(css) {
     // return value
-    let list = []
+    var list = []
     // When the string is empty, no need to evaluate
     if (css.length === 0) return list;
     // loop around parenthesis `}`
-    let pieces = css.split('}');
-    for (let i=0; i<pieces.length; i++) {
-      let y = pieces[i].split('{');
+    var pieces = css.split('}');
+    for (var i=0; i<pieces.length; i++) {
+      var y = pieces[i].split('{');
       // check if { has been found
       if (y.length === 1) {
         return list;
       } else {
         // get left and right of `{`
-        let selector = y[0].trim(), rules = y[1].trim();
+        var selector = y[0].trim(), rules = y[1].trim();
         // selector cannot be empty 0.0
         if (selector.length === 0) continue;
         // add to resulting list
-        list.push({ selector, rules });
+        list.push({ selector: selector, rules: rules });
       }
     }
     return list;
@@ -65,18 +83,18 @@
    * @param String dom
    * @return String new dom with injected styles
    */
-  SplatterCss.inject = (list, dom) => {
+  SplatterCss.inject = function(list, dom) {
     // if arguments are missing or empty return the empty string
     if (list === undefined || list.lenght === 0 || !dom) {
       return ''
     }
     // transform the dom string in HTMLElements in order to navigate it
-    let container = document.createElement('div')
+    var container = document.createElement('div')
     container.insertAdjacentHTML('beforeend', dom)
     // loop through the list and add styles to dom
-    for (let i = 0; i < list.length; i++) {
-      container.querySelectorAll(list[i].selector).forEach(element => {
-        element.setAttribute('style',list[i].rules)
+    for (var i = 0; i < list.length; i++) {
+      container.querySelectorAll(list[i].selector).forEach(function(el) {
+        el.setAttribute('style',list[i].rules)
       })
     }
     // return the string rapresentation of the styled dom
