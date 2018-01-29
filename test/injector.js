@@ -1,0 +1,84 @@
+let expect  = require('chai').expect
+let SplatterCss = require('../src/splattercss.js')
+
+suite('Css Injector', function(){
+
+  suiteSetup(function() {
+
+    require('jsdom-global')()
+
+    /**
+     * Demo 1
+     */
+    this.cssDemo1 = {
+      selector: '.test',
+      rules: 'color: black;'
+    }
+    this.domDemo1 = '<div class="test"></div>'
+    this.demo1 = SplatterCss.inject([this.cssDemo1], this.domDemo1)
+    /**
+     * Demo 2
+     */
+    this.cssDemo2 = {
+      selector: '.test,.test2',
+      rules: 'color: black;'
+    }
+    this.domDemo2 = '<div class="test"></div><div class="test2"></div>'
+    this.demo2 = SplatterCss.inject([this.cssDemo2], this.domDemo2)
+    /**
+     * Demo 3
+     */
+    this.cssDemo3 = {
+      selector: 'div > p',
+      rules: 'color: black;'
+    }
+    this.domDemo3 = '<div><p></p><p></p><p></p></div>'
+    this.demo3 = SplatterCss.inject([this.cssDemo3], this.domDemo3)
+  })
+
+  test('should return empty string with missing parameters', function(done){
+    expect(SplatterCss.inject()).to.be.a('string').that.is.empty
+    done()
+  })
+
+  test('should return empty string with empty dom parameter', function(done){
+    expect(SplatterCss.inject([this.cssDemo1], '')).to.be.a('string').that.is.empty
+    done()
+  })
+
+  test('should return same dom parameter when there are no css rules', function(done){
+    expect(SplatterCss.inject([], '<div></div>')).to.be.equal('<div></div>')
+    done()
+  })
+
+  test('should return non empty string with valid parameters', function(done){
+    expect(this.demo1).to.be.a('string').that.is.not.empty
+    done()
+  })
+
+  test('should add style attribute', function(done){
+    expect(this.demo1).to.include('style=')
+    done()
+  })
+
+  test('should add the rules without permutations', function(done){
+    expect(this.demo1).to.include(this.cssDemo1.rules)
+    done()
+  })
+
+  test('should only add rules without mutating the initial dom', function(done){
+    expect(this.demo1).to.include(`<div class="test" style="${this.cssDemo1.rules}"></div>`)
+    done()
+  })
+
+  test('should add the rules twice if selector are twice', function(done){
+    expect(this.demo2.match(/color: black;/g).length).to.be.equal(2)
+    done()
+  })
+
+  test('should add the rules to multiple elements when using generic selectors', function(done){
+    expect(this.demo3.match(/color: black;/g).length).to.be.equal(3)
+    done()
+  })
+
+})

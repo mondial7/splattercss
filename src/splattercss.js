@@ -28,10 +28,10 @@
    * Splits the css strings into objects
    * { selector: String, rules: String }
    *
-   * @param String
-   * @return Array
+   * @param String css
+   * @return Array {Object}
    */
-  SplatterCss.parse = function(css) {
+  SplatterCss.parse = css => {
     // return value
     let list = []
     // When the string is empty, no need to evaluate
@@ -53,6 +53,34 @@
       }
     }
     return list;
+  }
+
+  /**
+   * Inject the styles to a dom String and return the new dom String
+   *
+   * @todo there is no support for css precedences, that means you should take
+   *       care not to define selectors pointing to same elements
+   *
+   * @param Array {Object} list evaluated by parse()
+   * @param String dom
+   * @return String new dom with injected styles
+   */
+  SplatterCss.inject = (list, dom) => {
+    // if arguments are missing or empty return the empty string
+    if (list === undefined || list.lenght === 0 || !dom) {
+      return ''
+    }
+    // transform the dom string in HTMLElements in order to navigate it
+    let container = document.createElement('div')
+    container.insertAdjacentHTML('beforeend', dom)
+    // loop through the list and add styles to dom
+    for (let i = 0; i < list.length; i++) {
+      container.querySelectorAll(list[i].selector).forEach(element => {
+        element.setAttribute('style',list[i].rules)
+      })
+    }
+    // return the string rapresentation of the styled dom
+    return container.innerHTML
   }
 
   /**
