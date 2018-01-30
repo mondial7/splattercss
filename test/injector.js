@@ -34,6 +34,15 @@ suite('Css Injector', function(){
     }
     this.domDemo3 = '<div><p></p><p></p><p></p></div>'
     this.demo3 = SplatterCss.inject([this.cssDemo3], this.domDemo3)
+    /**
+     * Demo 4
+     */
+    this.cssDemo4 = {
+      selector: '.radom',
+      rules: 'color: black;'
+    }
+    this.domDemo4 = '<div></div>'
+    this.demo4 = SplatterCss.inject([this.cssDemo4], this.domDemo4)
   })
 
   test('should return empty string with missing parameters', function(done){
@@ -78,6 +87,11 @@ suite('Css Injector', function(){
 
   test('should add the rules to multiple elements when using generic selectors', function(done){
     expect(this.demo3.match(/color: black;/g).length).to.be.equal(3)
+    done()
+  })
+
+  test('should not add rules if not selector is matched', function(done){
+    expect(this.demo4).to.not.include(this.cssDemo4.rules)
     done()
   })
 
