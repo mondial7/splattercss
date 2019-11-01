@@ -52,15 +52,15 @@
   SplatterCss.parse = function(css) {
     // return value
     var list = []
-    // When the string is empty, no need to evaluate
-    if (css.length === 0) return list;
+    // When the string is empty or undefined, no need to evaluate
+    if (!css || css.length === 0) return list;
     // loop around parenthesis `}`
     var pieces = css.split('}');
     for (var i=0; i<pieces.length; i++) {
       var y = pieces[i].split('{');
       // check if { has been found
       if (y.length === 1) {
-        return list;
+        continue;
       } else {
         // get left and right of `{`
         var selector = y[0].trim(), rules = y[1].trim();
