@@ -1,7 +1,7 @@
 {
   "name": "splattercss",
   "version": "1.0.0",
-  "description": "Css polyfill for browsers without ShadowDom support",
+  "description": "Tiny CSS lib to distribute inline styles",
   "main": "build/splattercss.min.js",
   "scripts": {
     "test": "nyc mocha --ui tdd --require esm",
