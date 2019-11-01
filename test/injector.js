@@ -41,6 +41,15 @@ suite('Css Injector', function(){
     }
     this.domDemo4 = '<div></div>'
     this.demo4 = SplatterCss.inject([this.cssDemo4], this.domDemo4)
+    /**
+     * Demo 5
+     */
+     this.cssDemo5 = {
+       selector: '.test',
+       rules: 'color: black'
+     }
+     this.domDemo5 = '<div class="test" style="color: black"></div>'
+     this.demo5 = SplatterCss.inject([this.cssDemo5, this.cssDemo5], this.domDemo5)
   })
 
   test('should return empty string with missing parameters', function(done){
@@ -90,6 +99,12 @@ suite('Css Injector', function(){
 
   test('should not add rules if not selector is matched', function(done){
     expect(this.demo4).to.not.include(this.cssDemo4.rules)
+    done()
+  })
+
+  test('should append rules to existing rules', function(done){
+    expect(this.demo5.match(/color: black/g).length).to.be.equal(3)
+    expect(this.demo5.match(/color: black;color: black;color: black/g).length).to.be.equal(1)
     done()
   })
 

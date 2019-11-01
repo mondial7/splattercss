@@ -40,9 +40,6 @@ SplatterCss.parse = function(css) {
 /**
  * Inject the styles to a dom String and return the new dom String
  *
- * @todo there is no support for css precedences, that means you should take
- *       care not to define selectors pointing to same elements
- *
  * @param Array[Object] list evaluated by parse()
  * @param String dom
  * @return String new dom with injected styles
@@ -58,7 +55,11 @@ SplatterCss.inject = function(list, dom) {
   // loop through the list and add styles to dom
   for (let i = 0; i < list.length; i++) {
     container.querySelectorAll(list[i].selector).forEach(function(el) {
-      el.setAttribute('style',list[i].rules)
+      let currentStyles = el.getAttribute('style')
+      let newStyles = !!currentStyles
+        ? `${currentStyles};${list[i].rules}`
+        : list[i].rules
+      el.setAttribute('style', newStyles)
     })
   }
   // return the string rapresentation of the styled dom
