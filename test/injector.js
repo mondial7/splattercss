@@ -1,12 +1,10 @@
-let expect  = require('chai').expect
-let SplatterCss = require('../src/splattercss.js')
+import 'jsdom-global/register'
+import { expect } from 'chai'
+import SplatterCss from '../src/index.js'
 
 suite('Css Injector', function(){
 
   suiteSetup(function() {
-
-    require('jsdom-global')()
-
     /**
      * Demo 1
      */

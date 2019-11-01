@@ -4,8 +4,10 @@
   "description": "Css polyfill for browsers without ShadowDom support",
   "main": "build/splattercss.min.js",
   "scripts": {
-    "test": "nyc mocha --ui tdd",
-    "build": "uglifyjs src/splattercss.js -o build/splattercss.min.js --comments"
+    "test": "nyc mocha --ui tdd --require esm",
+    "build": "npm run build:min && npm run build:unmin",
+    "build:min": "cross-env NODE_ENV=production rollup --config",
+    "build:unmin": "cross-env NODE_ENV=development rollup --config --file build/splattercss.js"
   },
   "repository": {
     "type": "git",
@@ -24,10 +26,14 @@
   "homepage": "https://github.com/mondial7/splattercss#readme",
   "devDependencies": {
     "chai": "^4.1.2",
+    "cross-env": "^6.0.3",
+    "esm": "^3.2.25",
     "jsdom": "11.6.1",
     "jsdom-global": "3.0.2",
     "mocha": "^5.0.0",
     "nyc": "^14.1.1",
-    "uglify-js": "^3.6.6"
+    "rollup": "^1.26.2",
+    "rollup-plugin-license": "^0.12.1",
+    "rollup-plugin-uglify-es": "0.0.1"
   }
 }

@@ -1,5 +1,5 @@
-let expect  = require('chai').expect
-let SplatterCss = require('../src/splattercss.js')
+import { expect } from 'chai'
+import SplatterCss from '../src/index.js'
 
 suite('Css Parser', function(){
 
