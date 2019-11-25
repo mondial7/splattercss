@@ -15,5 +15,7 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
+    "semi": ["error", "never"],
+    "func-names": ["error", "as-needed"]
   },
 };

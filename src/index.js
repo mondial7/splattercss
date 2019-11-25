@@ -3,7 +3,7 @@
 /**
  * Define the module as empty object
  */
-let SplatterCss = {}
+const SplatterCss = {}
 
 /**
  * Parse a given css string
@@ -13,25 +13,25 @@ let SplatterCss = {}
  * @param String css
  * @return Array {Object}
  */
-SplatterCss.parse = function(css) {
+SplatterCss.parse = function parse(css) {
   // return value
-  let list = []
+  const list = []
   // When the string is empty or undefined, no need to evaluate
   if (!css || css.length === 0) return list
   // loop around parenthesis `}`
-  let pieces = css.split('}')
-  for (let i=0; i<pieces.length; i++) {
+  const pieces = css.split('}')
+  for (let i = 0; i < pieces.length; i += 1) {
     let y = pieces[i].split('{')
     // check if { has been found
-    if (y.length === 1) {
-      continue
-    } else {
+    if (y.length !== 1) {
       // get left and right of `{`
-      let selector = y[0].trim(), rules = y[1].trim()
+      const selector = y[0].trim()
+      const rules = y[1].trim()
       // selector cannot be empty 0.0
-      if (selector.length === 0) continue
-      // add to resulting list
-      list.push({ selector: selector, rules: rules })
+      if (selector.length !== 0) {
+        // add to resulting list
+        list.push({ selector, rules })
+      }
     }
   }
   return list
@@ -44,7 +44,7 @@ SplatterCss.parse = function(css) {
  * @param String dom
  * @return String new dom with injected styles
  */
-SplatterCss.inject = function(list, dom) {
+SplatterCss.inject = function inject(list, dom) {
   // if arguments are missing or empty return the empty string
   if (list === undefined || list.length === 0 || !dom) {
     return ''
@@ -54,9 +54,9 @@ SplatterCss.inject = function(list, dom) {
   container.insertAdjacentHTML('beforeend', dom)
   // loop through the list and add styles to dom
   for (let i = 0; i < list.length; i++) {
-    container.querySelectorAll(list[i].selector).forEach(function(el) {
-      let currentStyles = el.getAttribute('style')
-      let newStyles = !!currentStyles
+    container.querySelectorAll(list[i].selector).forEach((el) => {
+      const currentStyles = el.getAttribute('style')
+      const newStyles = currentStyles
         ? `${currentStyles};${list[i].rules}`
         : list[i].rules
       el.setAttribute('style', newStyles)
@@ -73,7 +73,7 @@ SplatterCss.inject = function(list, dom) {
  * @param String dom
  * @return String styled dom
  */
-SplatterCss.mesh = function(css, dom) {
+SplatterCss.mesh = function mesh(css, dom) {
   return this.inject(this.parse(css), dom)
 }
 
