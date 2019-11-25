@@ -48,7 +48,5 @@
       "pre-push": "npm test"
     }
   },
-  "dependencies": {
-    "please-upgrade-node": "^3.2.0"
-  }
+  "dependencies": {}
 }
