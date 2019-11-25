@@ -46,7 +46,7 @@ SplatterCss.parse = function(css) {
  */
 SplatterCss.inject = function(list, dom) {
   // if arguments are missing or empty return the empty string
-  if (list === undefined || list.lenght === 0 || !dom) {
+  if (list === undefined || list.length === 0 || !dom) {
     return ''
   }
   // transform the dom string in HTMLElements in order to navigate it
@@ -62,7 +62,7 @@ SplatterCss.inject = function(list, dom) {
       el.setAttribute('style', newStyles)
     })
   }
-  // return the string rapresentation of the styled dom
+  // return the string representation of the styled dom
   return container.innerHTML
 }
 
