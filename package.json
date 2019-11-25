@@ -1,6 +1,6 @@
 {
   "name": "splattercss",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tiny CSS lib to distribute inline styles",
   "main": "build/splattercss.min.js",
   "scripts": {
