@@ -7,7 +7,8 @@
     "test": "nyc mocha --ui tdd --require esm",
     "build": "npm run build:min && npm run build:unmin",
     "build:min": "cross-env NODE_ENV=production rollup --config",
-    "build:unmin": "cross-env NODE_ENV=development rollup --config --file build/splattercss.js"
+    "build:unmin": "cross-env NODE_ENV=development rollup --config --file build/splattercss.js",
+    "prepublishOnly": "npm test && pkg-ok"
   },
   "repository": {
     "type": "git",
@@ -36,14 +37,18 @@
     "jsdom-global": "3.0.2",
     "mocha": "^5.0.0",
     "nyc": "^14.1.1",
+    "pkg-ok": "^2.3.1",
     "rollup": "^1.26.2",
     "rollup-plugin-license": "^0.12.1",
     "rollup-plugin-uglify-es": "0.0.1"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm test && npm run build"
+      "pre-commit": "npm test && npm run build && git add build/*",
+      "pre-push": "npm test"
     }
+  },
+  "dependencies": {
+    "please-upgrade-node": "^3.2.0"
   }
 }
