@@ -1,5 +1,3 @@
-'use strict'
-
 /**
  * Define the module as empty object
  */
@@ -21,7 +19,7 @@ SplatterCss.parse = function parse(css) {
   // loop around parenthesis `}`
   const pieces = css.split('}')
   for (let i = 0; i < pieces.length; i += 1) {
-    let y = pieces[i].split('{')
+    const y = pieces[i].split('{')
     // check if { has been found
     if (y.length !== 1) {
       // get left and right of `{`
@@ -45,15 +43,17 @@ SplatterCss.parse = function parse(css) {
  * @return String new dom with injected styles
  */
 SplatterCss.inject = function inject(list, dom) {
-  // if arguments are missing or empty return the empty string
-  if (list === undefined || list.length === 0 || !dom) {
-    return ''
+  // when arguments are missing or empty
+  // return the dom or empty string to silently fail
+  // without throwing exceptions
+  if (!list || !dom) {
+    return dom || ''
   }
   // transform the dom string in HTMLElements in order to navigate it
-  let container = document.createElement('div')
+  const container = document.createElement('div')
   container.insertAdjacentHTML('beforeend', dom)
   // loop through the list and add styles to dom
-  for (let i = 0; i < list.length; i++) {
+  for (let i = 0; i < list.length; i += 1) {
     container.querySelectorAll(list[i].selector).forEach((el) => {
       const currentStyles = el.getAttribute('style')
       const newStyles = currentStyles
