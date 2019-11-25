@@ -1,6 +1,6 @@
 {
   "name": "splattercss",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tiny CSS lib to distribute inline styles",
   "main": "build/splattercss.min.js",
   "scripts": {
@@ -39,5 +39,11 @@
     "rollup": "^1.26.2",
     "rollup-plugin-license": "^0.12.1",
     "rollup-plugin-uglify-es": "0.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test && npm run build"
+    }
   }
 }
