@@ -1,12 +1,11 @@
+/* eslint-disable no-undef */
 import { expect } from 'chai'
-import SplatterCss from '../src/index.js'
+import SplatterCss from '../src/index'
 
-suite('Mesh', function(){
+require('jsdom-global')()
 
-  suiteSetup(function() {
-
-    require('jsdom-global')()
-
+suite('Mesh', () => {
+  suiteSetup(() => {
     /**
      * Demo 1
      */
@@ -15,9 +14,8 @@ suite('Mesh', function(){
     this.demo1 = SplatterCss.mesh(this.cssDemo1, this.domDemo1)
   })
 
-  test('should return corretly meshed dom', function(done){
+  test('should return correctly meshed dom', (done) => {
     expect(this.demo1).to.be.equal('<div class="test" style="color: white;"></div>')
     done()
   })
-
 })
